@@ -19,11 +19,12 @@ public class Collection {
         self.name = name
     }
 
-    public func addDocument(id: UUID? = nil, text: String, embedding: [Double]) {
+    public func addDocument(id: UUID? = nil, text: String, embedding: [Double], metadata: [String: String]) {
         let document = Document(
             id: id ?? UUID(),
             text: text,
-            embedding: embedding
+            embedding: embedding,
+            metadata: metadata
         )
 
         documents[document.id] = document
@@ -38,6 +39,15 @@ public class Collection {
     public func removeDocument(byId id: UUID) {
         documents[id] = nil
         save()
+    }
+    
+    public func getDocuments(byIds ids: [UUID]) -> [Document] {
+        var docs: [Document] = []
+        for id in ids {
+            guard let document = documents[id] else { continue }
+            docs.append(document)
+        }
+        return docs
     }
 
     public func search(
@@ -59,7 +69,9 @@ public class Collection {
                 continue
             }
 
-            similarities.append(SearchResult(id: id, text: text, score: similarity))
+            similarities.append(
+                SearchResult(id: id, text: text, metadata: document.metadata, createdAt: document.createdAt, score: similarity)
+            )
         }
 
         return Array(similarities.sorted(by: { $0.score > $1.score }).prefix(num_results))

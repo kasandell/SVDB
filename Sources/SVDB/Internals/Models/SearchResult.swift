@@ -10,5 +10,7 @@ import Foundation
 public struct SearchResult {
     public let id: UUID
     public let text: String
+    public let metadata: [String: String]
+    public let createdAt: Date
     public let score: Double
 }
