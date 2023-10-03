@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SearchResult {
+public struct SearchResult: Hashable {
     public let id: UUID
     public let text: String
     public let metadata: [String: String]
