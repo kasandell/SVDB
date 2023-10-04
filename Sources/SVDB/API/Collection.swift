@@ -50,6 +50,10 @@ public class Collection {
         }
         return docs
     }
+    
+    public func getDocuments(byPersonPublicId id: UUID) -> [Document] {
+        return documents.values.filter{$0.personPublicId == id}
+    }
 
     public func search(
         query: [Double],
