@@ -19,9 +19,10 @@ public class Collection {
         self.name = name
     }
 
-    public func addDocument(id: UUID? = nil, text: String, embedding: [Double], metadata: [String: String]) {
+    public func addDocument(id: UUID? = nil, personPublicId: UUID, text: String, embedding: [Double], metadata: [String: String]) {
         let document = Document(
             id: id ?? UUID(),
+            personPublicId: personPublicId,
             text: text,
             embedding: embedding,
             metadata: metadata
@@ -70,7 +71,11 @@ public class Collection {
             }
 
             similarities.append(
-                SearchResult(id: id, text: text, metadata: document.metadata, createdAt: document.createdAt, score: similarity)
+                SearchResult(
+                    id: id, text: text, metadata: document.metadata,
+                    createdAt: document.createdAt, score: similarity,
+                    personPublicId: document.personPublicId
+                )
             )
         }
 

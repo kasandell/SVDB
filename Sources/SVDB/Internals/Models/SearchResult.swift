@@ -13,4 +13,5 @@ public struct SearchResult: Hashable {
     public let metadata: [String: String]
     public let createdAt: Date
     public let score: Double
+    public let personPublicId: UUID
 }
