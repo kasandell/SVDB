@@ -42,6 +42,14 @@ public class Collection {
         save()
     }
     
+    public func removeDocuments(byPersonId id: UUID) {
+        let remove = documents.values.filter{$0.personPublicId == id}
+        for document in remove {
+            documents[document.id] = nil
+        }
+        save()
+    }
+    
     public func getDocuments(byIds ids: [UUID]) -> [Document] {
         var docs: [Document] = []
         for id in ids {
